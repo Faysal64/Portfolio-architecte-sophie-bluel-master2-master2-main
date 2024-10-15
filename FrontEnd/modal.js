@@ -234,14 +234,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-
-
-
 function deletePhoto(photoId, photoContainer, event) {
-    
     event.preventDefault();
-
     if (!photoContainer) {
         console.error('photoContainer est undefined');
         return; 
@@ -269,8 +263,6 @@ function deletePhoto(photoId, photoContainer, event) {
         console.error('Erreur lors de la suppression de la photo:', error);
     });
 }
-
-
 
 
 // Gestion des événements après le chargement de la page
@@ -424,12 +416,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
-
-
-
-
-
 
 
 function ajoutProjet() {
