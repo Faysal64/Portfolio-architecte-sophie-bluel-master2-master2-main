@@ -1,4 +1,4 @@
-let works = []; // variable globale
+let works = []; 
 let activeFilter = null; // Pour garder la trace du filtre actif
 
 // Récupération travaux
@@ -9,7 +9,7 @@ async function getData() {
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-    works = await response.json(); // Stockage des travaux dans works
+    works = await response.json(); 
     console.log(works);
     displayAllWorks();
   } catch (error) {
@@ -98,13 +98,13 @@ function displayCategories(categories) {
 function filtreActif(filterElement) {
   if (activeFilter) {
     activeFilter.classList.remove("active-filter");
-    activeFilter.style.backgroundColor = ""; // Réinitialiser la couleur de fond
-    activeFilter.style.color = ""; // Réinitialiser la couleur du texte
+    activeFilter.style.backgroundColor = "";
+    activeFilter.style.color = ""; 
   }
 
   filterElement.classList.add("active-filter");
-  filterElement.style.backgroundColor = "#1D6154"; // Couleur de fond active
-  filterElement.style.color = "#ffffff"; // Couleur du texte active
+  filterElement.style.backgroundColor = "#1D6154";
+  filterElement.style.color = "#ffffff";
   activeFilter = filterElement;
 }
 

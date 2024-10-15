@@ -143,7 +143,7 @@ function openAddPhotoModal() {
 
     if (addPhotoModal && overlay) {
         addPhotoModal.classList.add('show');
-        overlay.style.display = 'block'; // Afficher l'overlay avec la deuxième modale
+        overlay.style.display = 'block';
     }
 }
 
@@ -172,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('modal-overlay');
 
     if (overlay) {
-        // Ajoute l'écouteur pour fermer les modales au clic sur l'overlay
         overlay.addEventListener('click', function(event) {
             const modal1 = document.getElementById('modal');
             const modal2 = document.getElementById('modal-add-photo');
@@ -222,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('modal-overlay');
     
     if (overlay) {
-        overlay.addEventListener('click', closeModalOnOverlayClick); // Ajoute l'écouteur pour fermer la modale
+        overlay.addEventListener('click', closeModalOnOverlayClick); 
     }
 
     const closeButtons = document.querySelectorAll('.js-modal-close, .js-modal-close-add');
@@ -240,12 +239,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function deletePhoto(photoId, photoContainer) {
-    // Empêcher le comportement par défaut lors de la suppression
+    
     event.preventDefault();
 
     if (!photoContainer) {
         console.error('photoContainer est undefined');
-        return; // Retourne si le conteneur est indéfini
+        return; 
     }
 
     fetch(`http://localhost:5678/api/works/${photoId}`, {
@@ -276,7 +275,7 @@ function deletePhoto(photoId, photoContainer) {
 
 // Gestion des événements après le chargement de la page
 document.addEventListener('DOMContentLoaded', function () {
-    // appel fct pour charger les
+    // appel fct pour charger les donées
     getData();
     getCategories();
     displayEdition();
@@ -329,11 +328,10 @@ document.querySelector('.js-modal-back').addEventListener('click', backToGallery
 
 
 document.getElementById('photo-upload').addEventListener('change', function(event) {
-    const file = event.target.files[0]; // Récupère le fichier sélectionné
-    const reader = new FileReader(); // Utilise FileReader pour lire le fichier
+    const file = event.target.files[0]; // Récupère fichier 
+    const reader = new FileReader(); // lire fichier
   
     reader.onload = function(e) {
-        // Crée une image et l'affiche dans la modale
         const imgPreview = document.createElement('img');
         imgPreview.src = e.target.result;
         imgPreview.style.width = '126px'; 
@@ -341,7 +339,7 @@ document.getElementById('photo-upload').addEventListener('change', function(even
 
         
   
-        // Insère l'image dans la modale (à un endroit spécifique dans le DOM)
+        // Insère l'image dans la modale
         const previewContainer = document.querySelector('.flexCentre');
         previewContainer.appendChild(imgPreview);
         
@@ -360,7 +358,6 @@ document.getElementById('photo-upload').addEventListener('change', function(even
            submitButton.style.border = '1px solid #1D6154';
     }
   
-    // Vérifie si le fichier est une image
     if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
         reader.readAsDataURL(file); // Lis l'image comme URL de données
     } else {
@@ -396,7 +393,7 @@ function closeAddPhotoModalOnOverlayClick(event) {
     const addPhotoModal = document.getElementById('modal-add-photo');
     const overlay = document.getElementById('modal-overlay');
 
-    // Vérifie que le clic est sur l'overlay, pas sur la modale elle-même
+    
     if (event.target === overlay) {
         closeAddPhotoModal();
     }
@@ -421,7 +418,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const title = document.getElementById('photo-title').value.trim(); 
         const category = document.getElementById('photo-category').value; 
 
-        // Vérifie si le titre est vide ou si aucune catégorie n'est sélectionnée
         if (!title || category === "") {
             event.preventDefault(); 
             alert("Veuillez remplir tous les champs obligatoires : titre et catégorie."); 
@@ -441,13 +437,13 @@ function ajoutProjet() {
 
     if (form) {
         form.addEventListener('submit', function (e) {
-            e.preventDefault();  // Empêche le rechargement de la page
+            e.preventDefault();  
 
             const titleInput = document.getElementById('photo-title');
             const categoryInput = document.getElementById('photo-category');
             const imageInput = document.getElementById('photo-upload');
 
-            // Vérification des champs
+            
             if (!titleInput || !categoryInput || !imageInput) {
                 alert("Erreur interne : Un des champs du formulaire n'a pas été trouvé.");
                 return;
@@ -463,13 +459,11 @@ function ajoutProjet() {
                 return;
             }
 
-            // Création de formData
             const formData = new FormData();
             formData.append('title', title);
             formData.append('category', category);
             formData.append('image', imageFile);
 
-            // Requête POST pour ajouter le projet
             fetch('http://localhost:5678/api/works', {
                 method: 'POST',
                 headers: {
@@ -483,7 +477,7 @@ function ajoutProjet() {
                         throw new Error(`Erreur HTTP : ${response.status} - ${errorText}`);
                     });
                 }
-                return response.json();  // Parse la réponse JSON
+                return response.json(); 
             })
             .then(data => {
                 console.log('Projet ajouté avec succès :', data);
