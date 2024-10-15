@@ -436,19 +436,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-async function ajoutProjet() {
+function ajoutProjet() {
     const form = document.getElementById('add-photo-form');
 
     if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault(); 
-            console.log('Soumission du formulaire empêchée');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();  // Empêche le rechargement de la page
 
             const titleInput = document.getElementById('photo-title');
             const categoryInput = document.getElementById('photo-category');
             const imageInput = document.getElementById('photo-upload');
 
-            
+            // Vérification des champs
             if (!titleInput || !categoryInput || !imageInput) {
                 alert("Erreur interne : Un des champs du formulaire n'a pas été trouvé.");
                 return;
@@ -458,50 +457,46 @@ async function ajoutProjet() {
             const category = parseInt(categoryInput.value, 10);
             const imageFile = imageInput.files ? imageInput.files[0] : null;
 
+            // Si des champs sont manquants, on bloque la soumission
             if (!title || isNaN(category) || !imageFile) {
                 alert("Veuillez remplir tous les champs et sélectionner une image.");
                 return;
             }
 
-            
+            // Création de formData
             const formData = new FormData();
             formData.append('title', title);
             formData.append('category', category);
             formData.append('image', imageFile);
 
-            try {
-                const response = await fetch('http://localhost:5678/api/works', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
-                    body: formData
-                });
-
+            // Requête POST pour ajouter le projet
+            fetch('http://localhost:5678/api/works', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: formData
+            })
+            .then(response => {
                 if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Erreur HTTP : ${response.status} - ${errorText}`);
+                    return response.text().then(errorText => {
+                        throw new Error(`Erreur HTTP : ${response.status} - ${errorText}`);
+                    });
                 }
-
-                const data = await response.json();
+                return response.json();  // Parse la réponse JSON
+            })
+            .then(data => {
                 console.log('Projet ajouté avec succès :', data);
 
-                
-                closeAddPhotoModal();
-
-
-                openModal();
-
-                
-                return;
-            } catch (error) {
+                getData();  // Rechargement des projets après ajout
+            })
+            .catch(error => {
                 console.error('Erreur lors de l\'ajout du projet :', error);
                 alert('Erreur lors de l\'ajout du projet.');
-                
-                
-                return;
-            }
+            });
         });
+    } else {
+        console.error('Formulaire introuvable.');
     }
 }
 
