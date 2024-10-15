@@ -101,7 +101,7 @@ function openModal() {
                 
                 trashIcon.addEventListener('click', function (event) {
                     event.preventDefault()
-                    deletePhoto(work.id, photoContainer);
+                    deletePhoto(work.id, photoContainer, event );
                 });
 
                 // Ajouter l'image et l'icône de suppression au conteneur
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-function deletePhoto(photoId, photoContainer) {
+function deletePhoto(photoId, photoContainer, event) {
     
     event.preventDefault();
 
