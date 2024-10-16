@@ -1,80 +1,101 @@
-// Affichage mode édition
+// Fonction affichage photo
+function displayGallery(works) {
+    const galleryContainer = document.querySelector('.gallery');
+    galleryContainer.innerHTML = ''; 
 
+    works.forEach(work => {
+        const photo = document.createElement('div');
+        photo.classList.add('photo');
+        photo.dataset.id = work.id;
+
+        const img = document.createElement('img');
+        img.src = work.imageUrl;
+        img.alt = work.title;
+
+        photo.appendChild(img);
+        galleryContainer.appendChild(photo);
+    });
+}
+
+// Affichage mode édition
 function displayEdition() {
     const token = localStorage.getItem('token');
     const header = document.querySelector('header');
     const filtersContainer = document.querySelector('.displayFiltres');
     const galleryContainer = document.querySelector('.gallery');
-  
+
     if (token) {
-      fetch('http://localhost:5678/api/works', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        if (response.ok) {
-          document.querySelector('.edit').classList.remove('hide-edit');
-          header.classList.remove('no-margin-top');
-          header.classList.add('header-margin');
-          filtersContainer.style.display = 'none';
-  
-          // Bouton Modifier
-          const modifyIcon = document.createElement('i');
-          modifyIcon.classList.add('fa-regular', 'fa-pen-to-square');
-          modifyIcon.style.cursor = 'pointer';
-          const modifyText = document.createElement('span');
-          modifyText.textContent = 'Modifier';
-          modifyText.style.marginLeft = '10px';
-          modifyText.style.cursor = 'pointer';
-  
-          const modifyContainer = document.createElement('div');
-          modifyContainer.classList.add('modifier');
-          modifyContainer.style.display = 'flex';
-          modifyContainer.style.alignItems = 'center';
-          modifyContainer.appendChild(modifyIcon);
-          modifyContainer.appendChild(modifyText);
-  
-          galleryContainer.parentElement.insertBefore(modifyContainer, galleryContainer);
-  
-          // Ouverture 1ere modale sur modifier
-          modifyContainer.addEventListener('click', function() {
-            openModal();
-          });
-        } else {
-          console.log('Utilisateur non connecté ou token invalide');
-          localStorage.removeItem('token');
-          document.querySelector('.edit').classList.add('hide-edit');
-          filtersContainer.style.display = 'flex';
-          header.classList.remove('header-margin');
-          header.classList.add('no-margin-top');
-        }
-      })
-      .catch(error => {
-        console.error('Erreur lors de la vérification de l\'authentification:', error);
+        fetch('http://localhost:5678/api/works', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                document.querySelector('.edit').classList.remove('hide-edit');
+                header.classList.remove('no-margin-top');
+                header.classList.add('header-margin');
+                filtersContainer.style.display = 'none';
+
+                // Récupération des données
+                return response.json();
+            } else {
+                console.log('Utilisateur non connecté ou token invalide');
+                localStorage.removeItem('token');
+                document.querySelector('.edit').classList.add('hide-edit');
+                filtersContainer.style.display = 'flex';
+                header.classList.remove('header-margin');
+                header.classList.add('no-margin-top');
+                throw new Error('Token non valide');
+            }
+        })
+        .then(data => {
+            works = data;  
+            displayGallery(works);  
+            // Bouton Modifier
+            const modifyIcon = document.createElement('i');
+            modifyIcon.classList.add('fa-regular', 'fa-pen-to-square');
+            modifyIcon.style.cursor = 'pointer';
+            const modifyText = document.createElement('span');
+            modifyText.textContent = 'Modifier';
+            modifyText.style.marginLeft = '10px';
+            modifyText.style.cursor = 'pointer';
+
+            const modifyContainer = document.createElement('div');
+            modifyContainer.classList.add('modifier');
+            modifyContainer.style.display = 'flex';
+            modifyContainer.style.alignItems = 'center';
+            modifyContainer.appendChild(modifyIcon);
+            modifyContainer.appendChild(modifyText);
+
+            galleryContainer.parentElement.insertBefore(modifyContainer, galleryContainer);
+
+            // Ouverture 1ère modale sur modifier
+            modifyContainer.addEventListener('click', function() {
+                openModal();
+            });
+        })
+        .catch(error => {
+            console.error('Erreur lors de la vérification de l\'authentification:', error);
+            document.querySelector('.edit').classList.add('hide-edit');
+            filtersContainer.style.display = 'flex';
+            header.classList.remove('header-margin');
+            header.classList.add('no-margin-top');
+        });
+    } else {
         document.querySelector('.edit').classList.add('hide-edit');
         filtersContainer.style.display = 'flex';
         header.classList.remove('header-margin');
         header.classList.add('no-margin-top');
-      });
-    } else {
-      document.querySelector('.edit').classList.add('hide-edit');
-      filtersContainer.style.display = 'flex';
-      header.classList.remove('header-margin');
-      header.classList.add('no-margin-top');
     }
-  }
-  
-  
-
-
+}
 
 // Ouverture première modale
 function openModal() {
     const modal = document.getElementById('modal');
     const overlay = document.getElementById('modal-overlay');
     const ouverture = document.getElementById('modifyContainer')
-    
+
     if (modal && overlay) {
         modal.classList.add('show');
         overlay.style.display = 'block';
@@ -84,7 +105,6 @@ function openModal() {
         if (modalGallery) {
             modalGallery.innerHTML = ''; 
 
-            
             works.forEach(work => {
                 const photoContainer = document.createElement('div');
                 photoContainer.classList.add('photo-container');
@@ -98,10 +118,9 @@ function openModal() {
                 trashIcon.classList.add('trash-icon');
                 trashIcon.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
-                
                 trashIcon.addEventListener('click', function (event) {
-                    event.preventDefault()
-                    deletePhoto(work.id, photoContainer, event );
+                    event.preventDefault();
+                    deletePhoto(work.id, photoContainer, event);
                 });
 
                 // Ajouter l'image et l'icône de suppression au conteneur
@@ -112,6 +131,9 @@ function openModal() {
         }
     }
 }
+
+
+
 
 // Fermeture 1ère modale
 function closeModal() {
@@ -236,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function deletePhoto(photoId, photoContainer, event) {
     event.preventDefault();
+
     if (!photoContainer) {
         console.error('photoContainer est undefined');
         return; 
@@ -244,14 +267,21 @@ function deletePhoto(photoId, photoContainer, event) {
     fetch(`http://localhost:5678/api/works/${photoId}`, {
         method: 'DELETE',
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}` 
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })
     .then(response => {
         if (response.ok) {
             console.log('Photo supprimée avec succès');
+            
             photoContainer.remove();
-            works = works.filter(work => work.id !== photoId); // Mettre à jour localement les travaux
+            works = works.filter(work => work.id !== photoId); 
+
+            const photoInGallery = document.querySelector(`.gallery .photo[data-id='${photoId}']`);
+            if (photoInGallery) {
+                photoInGallery.remove();
+            }
+            
         } else {
             console.error('Erreur lors de la suppression de la photo');
             return response.text().then(errorText => {
@@ -263,6 +293,10 @@ function deletePhoto(photoId, photoContainer, event) {
         console.error('Erreur lors de la suppression de la photo:', error);
     });
 }
+
+
+
+
 
 
 // Gestion des événements après le chargement de la page
@@ -420,16 +454,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function ajoutProjet() {
     const form = document.getElementById('add-photo-form');
+    console.log('Form trouvé:', form); // Vérifie que le formulaire est trouvé
 
     if (form) {
         form.addEventListener('submit', function (e) {
-            e.preventDefault();  
+            e.preventDefault();  // Empêche la soumission du formulaire
+            console.log('Prévention du rafraîchissement'); // Vérifie si on entre ici
 
             const titleInput = document.getElementById('photo-title');
             const categoryInput = document.getElementById('photo-category');
             const imageInput = document.getElementById('photo-upload');
 
-            
             if (!titleInput || !categoryInput || !imageInput) {
                 alert("Erreur interne : Un des champs du formulaire n'a pas été trouvé.");
                 return;
@@ -439,7 +474,6 @@ function ajoutProjet() {
             const category = parseInt(categoryInput.value, 10);
             const imageFile = imageInput.files ? imageInput.files[0] : null;
 
-            // Si des champs sont manquants, on bloque la soumission
             if (!title || isNaN(category) || !imageFile) {
                 alert("Veuillez remplir tous les champs et sélectionner une image.");
                 return;
@@ -463,11 +497,10 @@ function ajoutProjet() {
                         throw new Error(`Erreur HTTP : ${response.status} - ${errorText}`);
                     });
                 }
-                return response.json(); 
+                return response.json();
             })
             .then(data => {
                 console.log('Projet ajouté avec succès :', data);
-
                 getData();  // Rechargement des projets après ajout
             })
             .catch(error => {
