@@ -502,16 +502,16 @@ function ajoutProjet() {
                 console.log('Projet ajouté avec succès :', data);
                 getData();  // Rechargement des projets après ajout
 
-                // Réinitialisation du formulaire
-                form.reset(); // Réinitialiser le titre et la catégorie
+                
+                form.reset(); 
 
-                // Supprimer l'image prévisualisée
+                // Supprimer l'image 
                 const previewContainer = document.querySelector('.flexCentre');
                 if (previewContainer) {
-                    previewContainer.innerHTML = '';  // Supprime l'image
+                    previewContainer.innerHTML = '';  
                 }
 
-                // Réafficher les éléments cachés pour l'upload
+                // Réafficher les éléments cachés 
                 const iconColor = document.querySelector('.iconeColor');
                 const labelPhotoUpload = document.querySelector('label[for="photo-upload"]');
                 const sizeText = document.querySelector('.size');
@@ -541,13 +541,13 @@ function ajoutProjet() {
 
                 if (modalBackground) {
                     modalBackground.style.padding = '20px';
-                    modalBackground.style.height = '170px'; // Remettre la taille par défaut
+                    modalBackground.style.height = '170px'; 
                 }
 
                 const submitButton = document.querySelector('.bordureFiltres2');
                 if (submitButton) {
-                    submitButton.style.backgroundColor = ''; // Réinitialise la couleur du bouton
-                    submitButton.style.border = ''; // Réinitialise la bordure du bouton
+                    submitButton.style.backgroundColor = ''; 
+                    submitButton.style.border = ''; 
                 }
             })
             .catch(error => {
