@@ -454,12 +454,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function ajoutProjet() {
     const form = document.getElementById('add-photo-form');
-    console.log('Form trouvé:', form); // Vérifie que le formulaire est trouvé
+    console.log('Form trouvé:', form);
 
     if (form) {
         form.addEventListener('submit', function (e) {
             e.preventDefault();  // Empêche la soumission du formulaire
-            console.log('Prévention du rafraîchissement'); // Vérifie si on entre ici
 
             const titleInput = document.getElementById('photo-title');
             const categoryInput = document.getElementById('photo-category');
@@ -502,6 +501,54 @@ function ajoutProjet() {
             .then(data => {
                 console.log('Projet ajouté avec succès :', data);
                 getData();  // Rechargement des projets après ajout
+
+                // Réinitialisation du formulaire
+                form.reset(); // Réinitialiser le titre et la catégorie
+
+                // Supprimer l'image prévisualisée
+                const previewContainer = document.querySelector('.flexCentre');
+                if (previewContainer) {
+                    previewContainer.innerHTML = '';  // Supprime l'image
+                }
+
+                // Réafficher les éléments cachés pour l'upload
+                const iconColor = document.querySelector('.iconeColor');
+                const labelPhotoUpload = document.querySelector('label[for="photo-upload"]');
+                const sizeText = document.querySelector('.size');
+                const modalBackground = document.querySelector('.backgroundModale');
+                const iconeGallery = document.querySelector('fa-regular.fa-image')
+                const ajoutPhoto = document.querySelector('bordureFiltres3')
+
+                if (iconeGallery) {
+                    iconeGallery.style.display = 'block'; 
+                }
+
+                if (ajoutPhoto) {
+                    ajoutPhoto.style.display = 'block'; 
+                }
+
+                if (iconColor) {
+                    iconColor.style.display = 'block'; 
+                }
+                
+                if (labelPhotoUpload) {
+                    labelPhotoUpload.style.display = 'block'; 
+                }
+
+                if (sizeText) {
+                    sizeText.style.display = 'block'; 
+                }
+
+                if (modalBackground) {
+                    modalBackground.style.padding = '20px';
+                    modalBackground.style.height = '170px'; // Remettre la taille par défaut
+                }
+
+                const submitButton = document.querySelector('.bordureFiltres2');
+                if (submitButton) {
+                    submitButton.style.backgroundColor = ''; // Réinitialise la couleur du bouton
+                    submitButton.style.border = ''; // Réinitialise la bordure du bouton
+                }
             })
             .catch(error => {
                 console.error('Erreur lors de l\'ajout du projet :', error);
