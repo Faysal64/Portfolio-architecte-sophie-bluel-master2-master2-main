@@ -502,52 +502,39 @@ function ajoutProjet() {
                 console.log('Projet ajouté avec succès :', data);
                 getData();  // Rechargement des projets après ajout
 
-                
-                form.reset(); 
+                // Réinitialisation du formulaire
+                form.reset();
 
-                // Supprimer l'image 
-                const previewContainer = document.querySelector('.flexCentre');
-                if (previewContainer) {
-                    previewContainer.innerHTML = '';  
+                // Supprimer uniquement l'image prévisualisée sans affecter les autres éléments
+                const previewImage = document.querySelector('.flexCentre img');
+                if (previewImage) {
+                    previewImage.remove();  // Supprime uniquement l'image
                 }
 
-                // Réafficher les éléments cachés 
+                // Réafficher les autres éléments cachés
                 const iconColor = document.querySelector('.iconeColor');
                 const labelPhotoUpload = document.querySelector('label[for="photo-upload"]');
                 const sizeText = document.querySelector('.size');
                 const modalBackground = document.querySelector('.backgroundModale');
-                const iconeGallery = document.querySelector('fa-regular.fa-image')
-                const ajoutPhoto = document.querySelector('bordureFiltres3')
-
-                if (iconeGallery) {
-                    iconeGallery.style.display = 'block'; 
-                }
-
-                if (ajoutPhoto) {
-                    ajoutPhoto.style.display = 'block'; 
-                }
 
                 if (iconColor) {
-                    iconColor.style.display = 'block'; 
+                    iconColor.style.display = 'block';
                 }
-                
                 if (labelPhotoUpload) {
-                    labelPhotoUpload.style.display = 'block'; 
+                    labelPhotoUpload.style.display = 'block';
                 }
-
                 if (sizeText) {
-                    sizeText.style.display = 'block'; 
+                    sizeText.style.display = 'block';
                 }
-
                 if (modalBackground) {
                     modalBackground.style.padding = '20px';
-                    modalBackground.style.height = '170px'; 
+                    modalBackground.style.height = '170px';
                 }
 
                 const submitButton = document.querySelector('.bordureFiltres2');
                 if (submitButton) {
-                    submitButton.style.backgroundColor = ''; 
-                    submitButton.style.border = ''; 
+                    submitButton.style.backgroundColor = '';
+                    submitButton.style.border = '';
                 }
             })
             .catch(error => {
