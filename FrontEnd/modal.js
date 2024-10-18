@@ -273,15 +273,22 @@ function deletePhoto(photoId, photoContainer, event) {
     .then(response => {
         if (response.ok) {
             console.log('Photo supprimée avec succès');
-            
+
+            // Supprimer la photo de la modale
             photoContainer.remove();
+            
+            // Mettre à jour la liste des projets dans la variable `works`
             works = works.filter(work => work.id !== photoId); 
 
+            // Supprimer également la photo de la galerie principale
             const photoInGallery = document.querySelector(`.gallery .photo[data-id='${photoId}']`);
             if (photoInGallery) {
                 photoInGallery.remove();
             }
-            
+
+            // Recharger la galerie principale après suppression
+            getData(); // Appelle la fonction qui rafraîchit la galerie principale
+
         } else {
             console.error('Erreur lors de la suppression de la photo');
             return response.text().then(errorText => {
