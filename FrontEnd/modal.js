@@ -274,20 +274,16 @@ function deletePhoto(photoId, photoContainer, event) {
         if (response.ok) {
             console.log('Photo supprimée avec succès');
 
-            // Supprimer la photo de la modale
             photoContainer.remove();
             
-            // Mettre à jour la liste des projets dans la variable `works`
             works = works.filter(work => work.id !== photoId); 
 
-            // Supprimer également la photo de la galerie principale
             const photoInGallery = document.querySelector(`.gallery .photo[data-id='${photoId}']`);
             if (photoInGallery) {
                 photoInGallery.remove();
             }
 
-            // Recharger la galerie principale après suppression
-            getData(); // Appelle la fonction qui rafraîchit la galerie principale
+            getData();
 
         } else {
             console.error('Erreur lors de la suppression de la photo');
@@ -509,13 +505,11 @@ function ajoutProjet() {
                 console.log('Projet ajouté avec succès :', data);
                 getData();  // Rechargement des projets après ajout
 
-                // Réinitialisation du formulaire
                 form.reset();
 
-                // Supprimer uniquement l'image prévisualisée sans affecter les autres éléments
                 const previewImage = document.querySelector('.flexCentre img');
                 if (previewImage) {
-                    previewImage.remove();  // Supprime uniquement l'image
+                    previewImage.remove();  
                 }
 
                 // Réafficher les autres éléments cachés
