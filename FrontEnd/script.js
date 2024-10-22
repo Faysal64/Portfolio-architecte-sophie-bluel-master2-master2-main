@@ -109,7 +109,7 @@ function filtreActif(filterElement) {
 }
 
 // Fonction pour mettre à jour le lien d'authentification
-function updateAuthLink() {
+function lienAutorisation() {
   const authLink = document.querySelector('#authLink');
   const token = localStorage.getItem('token');
 

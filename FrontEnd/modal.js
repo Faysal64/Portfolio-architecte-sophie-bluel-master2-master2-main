@@ -147,7 +147,7 @@ function closeModal() {
 }
 
 
-function closeModalOnOverlayClick(event) {
+function closeModalOverlay(event) {
     const overlay = document.getElementById('modal-overlay');
 
     // Vérifie que le clic sur l'overlay
@@ -181,7 +181,7 @@ function closeAddPhotoModal() {
 }
 
 
-function closeAddPhotoModalOnOverlayClick(event) {
+function closePhotoModalOverlay(event) {
     const overlay = document.getElementById('modal-overlay');
 
     if (event.target === overlay) {
@@ -200,9 +200,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Vérifie si l'overlay est visible et ferme la modale correspondante
             if (modal1 && modal1.classList.contains('show')) {
-                closeModalOnOverlayClick(event);
+                closeModalOverlay(event);
             } else if (modal2 && modal2.classList.contains('show')) {
-                closeAddPhotoModalOnOverlayClick(event);
+                closePhotoModalOverlay(event);
             }
         });
     }
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // Gestionnaire de clic pour fermer la deuxième modale en cliquant sur l'overlay
-function closeAddPhotoModalOnOverlayClick(event) {
+function closePhotoModalOverlay(event) {
     const overlay = document.getElementById('modal-overlay');
     if (event.target === overlay) {
         closeAddPhotoModal();
@@ -234,7 +234,7 @@ document.getElementById('open-add-photo-modal').addEventListener('click', functi
     if (addPhotoModal && overlay) {
         addPhotoModal.classList.add('show');
         overlay.style.display = 'block';
-        overlay.addEventListener('click', closeAddPhotoModalOnOverlayClick);
+        overlay.addEventListener('click', closePhotoModalOverlay);
     }
 });
 
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('modal-overlay');
     
     if (overlay) {
-        overlay.addEventListener('click', closeModalOnOverlayClick); 
+        overlay.addEventListener('click', closeModalOverlay); 
     }
 
     const closeButtons = document.querySelectorAll('.js-modal-close, .js-modal-close-add');
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Mettre à jour le lien d'authentification (login/logout)
-    updateAuthLink();
+    lienAutorisation();
 });
 
 
@@ -397,7 +397,7 @@ document.getElementById('photo-upload').addEventListener('change', function(even
 
 
 // Gestionnaire de clic pour fermer la modale en cliquant sur l'overlay
-function closeModalOnOverlayClick(event) {
+function closeModalOverlay(event) {
     const modal = document.getElementById('modal');
     const overlay = document.getElementById('modal-overlay');
 
@@ -412,13 +412,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('modal-overlay');
 
     if (overlay) {
-        overlay.addEventListener('click', closeModalOnOverlayClick);
+        overlay.addEventListener('click', closeModalOverlay);
     }
 });
 
 
 // Gestionnaire de clic pour fermer la deuxième modale en cliquant sur l'overlay
-function closeAddPhotoModalOnOverlayClick(event) {
+function closePhotoModalOverlay(event) {
     const addPhotoModal = document.getElementById('modal-add-photo');
     const overlay = document.getElementById('modal-overlay');
 
@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('modal-overlay');
 
     if (overlay) {
-        overlay.addEventListener('click', closeAddPhotoModalOnOverlayClick);
+        overlay.addEventListener('click', closePhotoModalOverlay);
     }
 });
 
@@ -461,7 +461,7 @@ function ajoutProjet() {
 
     if (form) {
         form.addEventListener('submit', function (e) {
-            e.preventDefault();  // Empêche la soumission du formulaire
+            e.preventDefault();  
 
             const titleInput = document.getElementById('photo-title');
             const categoryInput = document.getElementById('photo-category');
