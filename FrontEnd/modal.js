@@ -189,72 +189,6 @@ function closePhotoModalOverlay(event) {
     }
 }
 
-// Ajout d'événements pour la fermeture des modales
-document.addEventListener('DOMContentLoaded', function () {
-    const overlay = document.getElementById('modal-overlay');
-
-    if (overlay) {
-        overlay.addEventListener('click', function(event) {
-            const modal1 = document.getElementById('modal');
-            const modal2 = document.getElementById('modal-add-photo');
-
-            // Vérifie si l'overlay est visible et ferme la modale correspondante
-            if (modal1 && modal1.classList.contains('show')) {
-                closeModalOverlay(event);
-            } else if (modal2 && modal2.classList.contains('show')) {
-                closePhotoModalOverlay(event);
-            }
-        });
-    }
-
-    // Ajout d'événements pour la fermeture via les boutons de fermeture
-    const closeButtons = document.querySelectorAll('.js-modal-close, .js-modal-close-add');
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            closeModal();
-            closeAddPhotoModal();
-        });
-    });
-});
-
-
-// Gestionnaire de clic pour fermer la deuxième modale en cliquant sur l'overlay
-function closePhotoModalOverlay(event) {
-    const overlay = document.getElementById('modal-overlay');
-    if (event.target === overlay) {
-        closeAddPhotoModal();
-    }
-}
-
-// Ouverture de la modale d'ajout de photo
-document.getElementById('open-add-photo-modal').addEventListener('click', function () {
-    const addPhotoModal = document.getElementById('modal-add-photo');
-    const overlay = document.getElementById('modal-overlay');
-
-    if (addPhotoModal && overlay) {
-        addPhotoModal.classList.add('show');
-        overlay.style.display = 'block';
-        overlay.addEventListener('click', closePhotoModalOverlay);
-    }
-});
-
-// Ajout d'événements pour la fermeture des modales
-document.addEventListener('DOMContentLoaded', function () {
-    const overlay = document.getElementById('modal-overlay');
-    
-    if (overlay) {
-        overlay.addEventListener('click', closeModalOverlay); 
-    }
-
-    const closeButtons = document.querySelectorAll('.js-modal-close, .js-modal-close-add');
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            closeModal();
-            closeAddPhotoModal();
-        });
-    });
-});
-
 
 function deletePhoto(photoId, photoContainer, event) {
     event.preventDefault();
@@ -307,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // appel fct pour charger les donées
     getData();
     getCategories();
-    displayEdition();
+    displayEdition(); 
 
     // Gestion des événements pour la première modale
     const modalTrigger = document.querySelector('.js-modal-trigger');
@@ -394,18 +328,6 @@ document.getElementById('photo-upload').addEventListener('change', function(even
     }
 });
 
-
-
-// Gestionnaire de clic pour fermer la modale en cliquant sur l'overlay
-function closeModalOverlay(event) {
-    const modal = document.getElementById('modal');
-    const overlay = document.getElementById('modal-overlay');
-
-    // Vérifie que le clic est sur l'overlay, pas sur la modale elle-même
-    if (event.target === overlay) {
-        closeModal();
-    }
-}
 
 // Ajouter l'événement au chargement de la page
 document.addEventListener('DOMContentLoaded', function () {
