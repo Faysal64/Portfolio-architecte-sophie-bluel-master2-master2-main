@@ -99,7 +99,7 @@ function openModal() {
         modal.classList.add('show');
         overlay.style.display = 'block';
 
-        // Ajout photos à la galerie de la modale
+        // Ajout photos 
         const modalGallery = document.querySelector('.modal-gallery');
         if (modalGallery) {
             modalGallery.innerHTML = ''; 
@@ -107,7 +107,7 @@ function openModal() {
             works.forEach(work => {
                 const photoContainer = document.createElement('div');
                 photoContainer.classList.add('photo-container');
-                photoContainer.dataset.id = work.id; // Stocker l'ID de la photo
+                photoContainer.dataset.id = work.id; 
 
                 const img = document.createElement('img');
                 img.src = work.imageUrl;
@@ -122,7 +122,6 @@ function openModal() {
                     deletePhoto(work.id, photoContainer, event);
                 });
 
-                // Ajout image et icône de suppression au conteneur
                 photoContainer.appendChild(img);
                 photoContainer.appendChild(trashIcon);
                 modalGallery.appendChild(photoContainer);
@@ -149,7 +148,6 @@ function closeModal() {
 function closeModalOverlay(event) {
     const overlay = document.getElementById('modal-overlay');
 
-    // Vérifie que le clic sur l'overlay
     if (event.target === overlay) {
         closeModal();
     }
@@ -230,25 +228,18 @@ function deletePhoto(photoId, photoContainer, event) {
     });
 }
 
-
-
-
-
-
-// Gestion des événements après le chargement de la page
+// Gestion des événements après le chargement de la page (appel fct pour charger les données)
 document.addEventListener('DOMContentLoaded', function () {
-    // appel fct pour charger les donées
+
     getData();
     getCategories();
     displayEdition(); 
 
-    // Gestion des événements pour la première modale
+    // Gestion événement première modale
     const modalTrigger = document.querySelector('.js-modal-trigger');
     const modalClose = document.querySelector('.js-modal-close');
     const overtureModalPhoto = document.getElementById('open-add-photo-modal');
     const fermetureModalePhoto = document.querySelector('.js-modal-close-add');
-    
-
     
     if (modalClose) {
         modalClose.addEventListener('click', closeModal);
@@ -256,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Bouton pour fermer la première modale introuvable');
     }
 
-    // Gestion des événements pour la deuxième modale (Ajouter une photo)
+    // Gestion événement deuxième modale 
     if (overtureModalPhoto) {
         overtureModalPhoto.addEventListener('click', openAddPhotoModal);
     } else {
@@ -269,12 +260,9 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Bouton pour fermer la modale d\'ajout de photo introuvable');
     }
 
-    // Mettre à jour le lien d'authentification (login/logout)
     lienAutorisation();
 });
 
-
-// Retour 1ere modale
 function backToGallery() {
     closeAddPhotoModal();
     openModal(); 
@@ -283,10 +271,8 @@ function backToGallery() {
 document.querySelector('.js-modal-back').addEventListener('click', backToGallery);
 
 
-
-
 document.getElementById('photo-upload').addEventListener('change', function(event) {
-    const file = event.target.files[0]; // Récupère fichier 
+    const file = event.target.files[0]; // Récupère le fichier 
     const reader = new FileReader(); 
   
     reader.onload = function(e) {
@@ -296,7 +282,6 @@ document.getElementById('photo-upload').addEventListener('change', function(even
         imgPreview.style.height = 'auto';
 
         
-  
         // Insère l'image dans la modale
         const previewContainer = document.querySelector('.flexCentre');
         previewContainer.appendChild(imgPreview);
@@ -317,7 +302,7 @@ document.getElementById('photo-upload').addEventListener('change', function(even
     }
   
     if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-        reader.readAsDataURL(file); // Lis l'image comme URL de données
+        reader.readAsDataURL(file); 
     } else {
         alert('Veuillez sélectionner un fichier image valide (JPEG ou PNG)');
     }
@@ -334,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Gestionnaire de clic pour fermer la deuxième modale en cliquant sur l'overlay
+// Gestionnaire de clic pour overlay clic
 function closePhotoModalOverlay(event) {
     const addPhotoModal = document.getElementById('modal-add-photo');
     const overlay = document.getElementById('modal-overlay');
@@ -345,7 +330,6 @@ function closePhotoModalOverlay(event) {
     }
 }
 
-// Ajouter l'événement pour la deuxième modale également
 document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('modal-overlay');
 
@@ -355,11 +339,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Gestion des événements après le chargement de la page
+// Gestion événement pour ajout photo après chargement de la page
 document.addEventListener('DOMContentLoaded', function () {
 
-    
-    // Ajouter un gestionnaire d'événement pour le formulaire d'ajout de photo
     document.getElementById('add-photo-form').addEventListener('submit', function(event) {
         const title = document.getElementById('photo-title').value.trim(); 
         const category = document.getElementById('photo-category').value; 
@@ -429,7 +411,7 @@ function ajoutProjet() {
                     previewImage.remove();  
                 }
 
-                // Réafficher les autres éléments cachés
+                // Réafficher les éléments cachés
                 const iconColor = document.querySelector('.iconeColor');
                 const labelPhotoUpload = document.querySelector('label[for="photo-upload"]');
                 const sizeText = document.querySelector('.size');

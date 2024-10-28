@@ -1,5 +1,5 @@
 let works = []; 
-let activeFilter = null; // Pour garder la trace du filtre actif
+let activeFilter = null;
 
 // Récupération travaux
 async function getData() {
@@ -63,7 +63,6 @@ function displayProject(data) {
 function displayCategories(categories) {
   const container = document.querySelector(".displayFiltres");
 
-  
   const allDiv = document.createElement("div");
   allDiv.textContent = "Tous";
   allDiv.classList.add("bordureFiltres");
@@ -85,7 +84,7 @@ function displayCategories(categories) {
       const tableauxFiltres = works.filter(work => work.categoryId === category.id);
       const gallery = document.querySelector(".gallery");
       gallery.innerHTML = ''; 
-      tableauxFiltres.forEach(work => displayProject(work)); // Afficher les travaux filtrés
+      tableauxFiltres.forEach(work => displayProject(work)); // Affichage travaux
       filtreActif(div); // Mettre à jour le filtre actif
     });
   });
@@ -107,7 +106,7 @@ function filtreActif(filterElement) {
   filterElement.style.color = "#ffffff";
   activeFilter = filterElement;
 }
-
+  
 // Fonction pour mettre à jour le lien d'authentification
 function lienAutorisation() {
   const authLink = document.querySelector('#authLink');
