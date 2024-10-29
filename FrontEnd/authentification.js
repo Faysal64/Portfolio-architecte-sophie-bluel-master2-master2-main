@@ -52,7 +52,7 @@ function logout() {
     window.location.href = 'index.html'; 
 }
 
-// Attacher la fonction login à l'événement de soumission du formulaire
+// Attacher login au submit
 document.querySelector('#loginForm').addEventListener('submit', login);
 
 

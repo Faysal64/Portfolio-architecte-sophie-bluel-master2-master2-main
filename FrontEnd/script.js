@@ -106,6 +106,7 @@ function filtreActif(filterElement) {
   filterElement.style.color = "#ffffff";
   activeFilter = filterElement;
 }
+
   
 // Fonction pour mettre à jour le lien d'authentification
 function lienAutorisation() {
