@@ -235,8 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
     getCategories();
     displayEdition(); 
 
-    // Gestion événement première modale
-    const modalTrigger = document.querySelector('.js-modal-trigger');
+    // Gestion événement première modale bouton croix etc
     const modalClose = document.querySelector('.js-modal-close');
     const overtureModalPhoto = document.getElementById('open-add-photo-modal');
     const fermetureModalePhoto = document.querySelector('.js-modal-close-add');
@@ -319,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Gestionnaire de clic pour overlay clic
+// Gestionnaire de clic pour overlay 
 function closePhotoModalOverlay(event) {
     const addPhotoModal = document.getElementById('modal-add-photo');
     const overlay = document.getElementById('modal-overlay');
@@ -356,7 +355,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function ajoutProjet() {
     const form = document.getElementById('add-photo-form');
-    console.log('Form trouvé:', form);
 
     if (form) {
         form.addEventListener('submit', function (e) {

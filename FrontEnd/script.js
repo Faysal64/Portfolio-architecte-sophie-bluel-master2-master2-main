@@ -24,7 +24,7 @@ function displayAllWorks() {
   works.forEach(work => displayProject(work));
 }
 
-// Affichage projet
+// Création projet
 function displayProject(data) {
   const figure = document.createElement("figure");
 
@@ -81,7 +81,7 @@ function displayCategories(categories) {
     container.appendChild(div);
 
     div.addEventListener('click', function() {
-      const tableauxFiltres = works.filter(work => work.categoryId === category.id);
+      const tableauxFiltres = works.filter(work => work.categoryId === category.id);//vérifie si catégorie d'un des travaux works est = à la catégorie d'un des travaux cliqué
       const gallery = document.querySelector(".gallery");
       gallery.innerHTML = ''; 
       tableauxFiltres.forEach(work => displayProject(work)); // Affichage travaux
